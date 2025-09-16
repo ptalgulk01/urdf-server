@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>URDF Viewer</title>
+	<style>
+		:root { color-scheme: light dark; }
+		html, body { height: 100%; margin: 0; }
+		#app { display: grid; grid-template-columns: 320px 1fr; grid-template-rows: 100%; height: 100%; }
+		#controls { padding: 12px; border-right: 1px solid #3334; overflow: auto; }
+		#controls h2 { margin: 0 0 8px; font-size: 16px; }
+		#controls .row { margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+		#controls label { display: inline-flex; align-items: center; gap: 6px; }
+		#viewport { position: relative; }
+		#canvas { width: 100%; height: 100%; display: block; }
+		input[type="text"] { width: 100%; }
+		select { width: 100%; }
+		.small { font-size: 12px; opacity: 0.8; }
+		.mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12px; }
+	</style>
+</head>
+<body>
+	<div id="app">
+		<div id="controls">
+			<h2>URDF Controls</h2>
+			<div class="row">
+				<label class="small">URDF URL</label>
+			</div>
+			<div class="row">
+				<input id="urdfUrl" type="text" placeholder="/urdf/sample.urdf or https://..." />
+			</div>
+			<div class="row">
+				<label class="small">package:// base</label>
+			</div>
+			<div class="row">
+				<input id="pkgBase" type="text" placeholder="/packages/ or https://..." />
+			</div>
+			<div class="row">
+				<button id="loadBtn">Load URDF</button>
+			</div>
+			<hr />
+			<div class="row">
+				<label class="small">Local folder</label>
+			</div>
+			<div class="row">
+				<button id="pickFolderBtn">Pick Folder…</button>
+				<input id="folderInput" type="file" webkitdirectory directory multiple style="display:none" />
+			</div>
+			<div class="row">
+				<select id="localUrdfSelect"></select>
+			</div>
+			<div class="row mono" id="folderInfo"></div>
+			<div class="row">
+				<button id="loadLocalBtn">Load From Folder</button>
+			</div>
+			<hr />
+			<div class="row">
+				<label><input id="ignoreLimits" type="checkbox" /> Ignore Joint Limits</label>
+			</div>
+			<div class="row">
+				<label><input id="hideFixed" type="checkbox" /> Hide Fixed Joints</label>
+			</div>
+			<div class="row">
+				<label><input id="useRadians" type="checkbox" checked /> Use Radians</label>
+			</div>
+			<div class="row">
+				<label><input id="showCollision" type="checkbox" /> Show Collision</label>
+			</div>
+			<div class="row">
+				<label><input id="autoCenter" type="checkbox" checked /> Autocenter</label>
+			</div>
+			<div class="row">
+				<label><input id="animateJoints" type="checkbox" /> Animate Joints</label>
+			</div>
+			<div class="row">
+				<select id="upAxis">
+					<option value="X+">+X</option>
+					<option value="X-">-X</option>
+					<option value="Y+">+Y</option>
+					<option value="Y-">-Y</option>
+					<option value="Z+" selected>+Z</option>
+					<option value="Z-">-Z</option>
+				</select>
+			</div>
+			<div class="row">
+				<label><input id="freeRotate" type="checkbox" /> Free rotate (trackball)</label>
+			</div>
+			<hr />
+			<div class="row">
+				<label class="small">Joint</label>
+			</div>
+			<div class="row">
+				<select id="jointSelect"></select>
+			</div>
+			<div class="row">
+				<input id="jointSlider" type="range" min="-3.14159" max="3.14159" step="0.001" />
+			</div>
+			<div class="row small" id="jointInfo"></div>
+		</div>
+		<div id="viewport">
+			<canvas id="canvas"></canvas>
+		</div>
+	</div>
+	<script type="module" src="/src/main.ts"></script>
+</body>
+</html> 
